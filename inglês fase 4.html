@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Junior — In the Park (Aprenda Inglês)</title>
+  <title>Junior — family (Aprenda Inglês)</title>
   <style>
     :root{--bg:#f7f9fc;--card:#fff;--accent:#4f46e5;--accent-2:#06b6d4;--muted:#6b7280}
     *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
@@ -41,8 +41,8 @@
   <div class="app">
     <header>
       <div>
-        <h1>Junior — In the Park</h1>
-        <p>Mini-curso divertido: aprenda 10 palavras em inglês sobre o parque (nível iniciante)</p>
+        <h1>Junior — family</h1>
+        <p>Mini-curso divertido: aprenda 10 palavras em inglês (nível iniciante)</p>
 
         <!-- MENU RETRÁTIL DE FASES -->
         <div style="margin-top:12px;position:relative;">
@@ -103,22 +103,35 @@
             <p style="margin:6px 0;color:var(--muted)">Arraste as palavras para a imagem correspondente.</p>
 
             <div class="match-grid">
-             <div class="match-grid">
-  <div>
-    <div class="dropzone" data-accept="Spoon" style="font-size:40px; background-color:#cce7ff">🥄</div>
-    <div class="dropzone" data-accept="Fork" style="font-size:40px; background-color:#cce7ff">🍴</div>
-    <div class="dropzone" data-accept="Knife" style="font-size:40px; background-color:#cce7ff">🔪</div>
-    <div class="dropzone" data-accept="Plate" style="font-size:40px; background-color:#cce7ff">🍽️</div>
-    <div class="dropzone" data-accept="Cup" style="font-size:40px; background-color:#cce7ff">🥤</div>
-  </div>
-  <div>
-    <div class="dropzone" data-accept="Pan" style="font-size:40px; background-color:#cce7ff">🍳</div>
-    <div class="dropzone" data-accept="Fridge" style="font-size:40px; background-color:#cce7ff">🧊</div>
-    <div class="dropzone" data-accept="Stove" style="font-size:40px; background-color:#cce7ff">🔥</div>
-    <div class="dropzone" data-accept="Table" style="font-size:40px; background-color:#cce7ff">🪑</div>
-    <div class="dropzone" data-accept="Apple" style="font-size:40px; background-color:#cce7ff">🍎</div>
-  </div>
-</div>
+              <div>
+                <div class="dropzone" data-accept="Mother" style="font-size:30px; background-color:#cce7ff">
+                  <img src="mother.png" alt="Mother" style="height:40px;">
+                </div>
+                <div class="dropzone" data-accept="Father" style="font-size:30px; background-color:#cce7ff">
+                  <img src="father.png" alt="Father" style="height:40px;">
+                </div>
+                <div class="dropzone" data-accept="Parent" style="font-size:30px; background-color:#cce7ff">
+                  <img src="parent.png" alt="Parent" style="height:40px;">
+                </div>
+                <div class="dropzone" data-accept="Son" style="font-size:30px; background-color:#cce7ff">
+                  <img src="son.png" alt="Son" style="height:40px;">
+                </div>
+              </div>
+              <div>
+                <div class="dropzone" data-accept="Daughter" style="font-size:30px; background-color:#cce7ff">
+                  <img src="daughter.png" alt="Daughter" style="height:40px;">
+                </div>
+                <div class="dropzone" data-accept="Child" style="font-size:30px; background-color:#cce7ff">
+                  <img src="child.png" alt="Child" style="height:40px;">
+                </div>
+                <div class="dropzone" data-accept="Brother" style="font-size:30px; background-color:#cce7ff">
+                  <img src="brother.png" alt="Brother" style="height:40px;">
+                </div>
+                <div class="dropzone" data-accept="Sister" style="font-size:30px; background-color:#cce7ff">
+                  <img src="sister.png" alt="Sister" style="height:40px;">
+                </div>
+              </div>
+              </div>
             </div>
 
             <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap" id="draggables"></div>
@@ -197,37 +210,35 @@
   </div>
 
 <script>
-  /* -----------------------
-     Dados, utilitários e render
-     ----------------------- */
+/* -----------------------
+   Dados, utilitários e render
+   ----------------------- */
 
-  // NOVO ARRAY DE PALAVRAS E EMOJIS
   const WORDS = [
-    {key:'spoon', eng:'Spoon', pt:'Colher', img:'🥄'},
-    {key:'fork', eng:'Fork', pt:'Garfo', img:'🍴'},
-    {key:'knife', eng:'Knife', pt:'Faca', img:'🔪'},
-    {key:'plate', eng:'Plate', pt:'Prato', img:'🍽️'},
-    {key:'cup', eng:'Cup', pt:'Copo', img:'🥤'},
-    {key:'pan', eng:'Pan', pt:'Panela', img:'🍳'},
-    {key:'fridge', eng:'Fridge', pt:'Geladeira', img:'🧊'},
-    {key:'stove', eng:'Stove', pt:'Fogão', img:'🔥'},
-    {key:'table', eng:'Table', pt:'Mesa', img:'🪑'},
-    {key:'apple', eng:'Apple', pt:'Maçã', img:'🍎'}
+    {key:'mother', eng:'Mother', pt:'Mãe', img:'mother.png'},
+    {key:'father', eng:'Father', pt:'Pai', img:'father.png'},
+    {key:'parent', eng:'Parent', pt:'Responsável', img:'parent.png'},
+    {key:'son', eng:'Son', pt:'Filho', img:'son.png'},
+    {key:'daughter', eng:'Daughter', pt:'Filha', img:'daughter.png'},
+    {key:'child', eng:'Child', pt:'Criança', img:'child.png'},
+    {key:'brother', eng:'Brother', pt:'Irmão', img:'brother.png'},
+    {key:'sister', eng:'Sister', pt:'Irmã', img:'sister.png'},
+    {key:'grandfather', eng:'Grandfather', pt:'Avô', img:'grandfather.png'},
+    {key:'grandmother', eng:'Grandmother', pt:'Avó', img:'grandmother.png'}
   ];
 
-  // Frases adaptadas para a cozinha
-  const SENTENCES = [
-    { pt: "A maçã está no prato", en: ["The","apple","is","on","the","plate"], words:["The","apple","is","on","the","plate"] },
-    { pt: "O garfo está na mesa", en: ["The","fork","is","on","the","table"], words:["The","fork","is","on","the","table"] },
-    { pt: "A panela está no fogão", en: ["The","pan","is","on","the","stove"], words:["The","pan","is","on","the","stove"] },
-    { pt: "O copo está cheio", en: ["The","cup","is","full"], words:["The","cup","is","full"] },
-    { pt: "A geladeira está fria", en: ["The","fridge","is","cold"], words:["The","fridge","is","cold"] },
-    { pt: "A colher está limpa", en: ["The","spoon","is","clean"], words:["The","spoon","is","clean"] },
-    { pt: "A faca está afiada", en: ["The","knife","is","sharp"], words:["The","knife","is","sharp"] },
-    { pt: "O prato está vazio", en: ["The","plate","is","empty"], words:["The","plate","is","empty"] },
-    { pt: "A mesa está posta", en: ["The","table","is","set"], words:["The","table","is","set"] },
-    { pt: "O fogão está quente", en: ["The","stove","is","hot"], words:["The","stove","is","hot"] }
-  ];
+const SENTENCES = [
+  { pt: "Minha mãe está em casa", en: ["My","mother","is","at","home"], words:["My","mother","is","at","home"] },
+  { pt: "Meu pai está trabalhando", en: ["My","father","is","working"], words:["My","father","is","working"] },
+  { pt: "Meu irmão está brincando", en: ["My","brother","is","playing"], words:["My","brother","is","playing"] },
+  { pt: "Minha irmã está estudando", en: ["My","sister","is","studying"], words:["My","sister","is","studying"] },
+  { pt: "Minha avó está na cozinha", en: ["My","grandmother","is","in","the","kitchen"], words:["My","grandmother","is","in","the","kitchen"] },
+  { pt: "Meu avô está no jardim", en: ["My","grandfather","is","in","the","garden"], words:["My","grandfather","is","in","the","garden"] },
+  { pt: "Meu filho está dormindo", en: ["My","son","is","sleeping"], words:["My","son","is","sleeping"] },
+  { pt: "Minha filha está lendo", en: ["My","daughter","is","reading"], words:["My","daughter","is","reading"] },
+  { pt: "A criança está sorrindo", en: ["The","child","is","smiling"], words:["The","child","is","smiling"] },
+  { pt: "Meus pais são legais", en: ["My","parents","are","nice"], words:["My","parents","are","nice"] }
+];
 
 let progress = 0;
 let currentSentenceIndex = 0;
@@ -261,8 +272,8 @@ function renderWords(list){
     const row = document.createElement('div');
     row.className='word-row';
     row.innerHTML = `
-      <div class='emoji' style="font-size:40px;">
-        ${w.img}
+      <div class='emoji'>
+        <img src="${w.img}" alt="${w.eng}" style="height:40px;">
       </div>
       <div class='text'>
         <div class='eng'>${w.eng}</div>

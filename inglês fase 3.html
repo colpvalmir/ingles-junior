@@ -1,10 +1,9 @@
-
 <!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Junior — at school (Aprenda Inglês)</title>
+  <title>Junior — At School (Aprenda Inglês)</title>
   <style>
     :root{--bg:#f7f9fc;--card:#fff;--accent:#4f46e5;--accent-2:#06b6d4;--muted:#6b7280}
     *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
@@ -28,7 +27,7 @@
     .activity{margin-top:12px}
     .activity h3{margin:0 0 8px 0}
     .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .dropzone{min-height:56px;border:2px dashed #e6eef8;border-radius:10px;padding:8px;background:#fbfdff}
+    .dropzone{min-height:56px;border:2px dashed #e6eef8;border-radius:10px;padding:8px;background:#fbfdff;transition:all 0.25s}
     .draggable{display:inline-flex;gap:8px;align-items:center;padding:8px 10px;border-radius:8px;background:#fff;border:1px solid #f1f5f9;cursor:grab}
     .token{display:inline-block;background:white;border:1px solid var(--accent);padding:6px 10px;margin:4px;border-radius:6px;cursor:grab}
     #wordsBank{min-height:44px;border:1px dashed #e5e7eb;border-radius:8px;padding:8px;background:#fff}
@@ -42,8 +41,40 @@
   <div class="app">
     <header>
       <div>
-        <h1>Junior — at school</h1>
+        <h1>Junior — At School</h1>
         <p>Mini-curso divertido: aprenda 10 palavras em inglês (nível iniciante)</p>
+
+        <!-- MENU RETRÁTIL DE FASES -->
+        <div style="margin-top:12px;position:relative;">
+          <button id="toggleMenu" class="speak" 
+                  style="background:var(--accent);color:white;border:none;padding:8px 16px;
+                         border-radius:8px;font-size:0.9rem;cursor:pointer;">
+            📚 Selecionar Fase ▼
+          </button>
+          
+          <div id="menuFases" style="display:none;position:absolute;top:100%;left:0;
+               background:white;border:1px solid #ddd;border-radius:8px;
+               padding:8px;margin-top:6px;box-shadow:0 4px 10px rgba(0,0,0,0.1);
+               z-index:1000;max-height:240px;overflow-y:auto;min-width:220px;">
+            <a href="index.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+               📘 Fase 1: At the Park
+            </a>
+            <a href="inglês fase 2.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+               🍴 Fase 2: In the Kitchen
+            </a>
+            <a href="inglês fase 3.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+               🏠 Fase 3: At School
+            </a>
+            <a href="inglês fase 4.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+               🏠 Fase 4: Junior family
+            </a>
+            <!-- Adicione mais fases aqui -->
+          </div>
+        </div>
       </div>
       <div style="margin-left:auto;text-align:right">
         <div style="font-weight:700;color:var(--muted)">Progresso</div>
@@ -55,21 +86,8 @@
 
     <div class="grid">
       <!-- coluna principal -->
-      <div>
+      <main>
         <div class="card">
-          <div class="lesson-title">
-            <div>
-              <strong>Lesson 1 — at school</strong>
-              <div style="color:var(--muted);font-size:0.9rem">10 palavras novas — repita, jogue e desenhe!</div>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-              <small style="color:var(--muted)">Aluno: 8 anos</small>
-              <a href="index.html" class="speak" style="background:var(--accent-2);color:white;border:none;padding:8px 16px;border-radius:8px;font-size:0.9rem;text-decoration:none;display:inline-block;">
-                ➡️ Próxima Lição: In the Park
-              </a>
-            </div>
-          </div>
-
           <!-- lista de palavras -->
           <div id="words"></div>
 
@@ -96,13 +114,14 @@
                 <div class="dropzone" data-accept="teacher" style="font-size:30px; background-color:#cce7ff">👨‍🏫</div>
                 <div class="dropzone" data-accept="calendar" style="font-size:30px; background-color:#cce7ff">📅</div>
                 <div class="dropzone" data-accept="notes" style="font-size:30px; background-color:#cce7ff">📝</div>
-                <div class="dropzone" data-accept="ruler" style="font-size:30px; background-color:#cce7ff">livro na mesa.jpg</div>
+                <div class="dropzone" data-accept="ruler" style="font-size:30px; background-color:#cce7ff">📏</div>
               </div>
             </div>
 
             <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap" id="draggables"></div>
 
-            <div style="margin-top:12px">
+            <!-- dentro do #activityArea -->
+            <div id="checkMatchWrapper" style="margin-top:12px;display:none;">
               <button id="checkMatch" class="speak">✅ Checar respostas</button>
               <span id="matchResult" style="margin-left:10px;color:var(--muted)"></span>
             </div>
@@ -114,7 +133,9 @@
             <p style="margin:6px 0;color:var(--muted)">Escolha a tradução correta (português) para a palavra em inglês.</p>
             <div id="mcqArea"></div>
             <div style="margin-top:8px">
-              <button id="nextMcq" class="speak">Próxima</button>
+              <button id="nextMcq" class="speak" style="background:var(--accent);color:white;border:none;padding:14px 32px;font-size:1.15rem;border-radius:10px;box-shadow:0 2px 8px #4f46e540;cursor:pointer;">
+                Próxima
+              </button>
               <span id="mcqResult" style="margin-left:10px;color:var(--muted)"></span>
             </div>
           </div>
@@ -143,30 +164,18 @@
               🎯 Mostrar Fase 1
             </button>
           </div>
-
         </div>
 
-        <div class="card" style="margin-top:12px">
+        <div id="conclusionCard" class="card" style="margin-top:12px">
           <h3 style="margin:0 0 8px 0">Conclusão</h3>
           <div class="conclusion">
             Aprender com calma, repetir e praticar diariamente ajuda a formar hábitos positivos. Pequenos passos constantes levam a grandes resultados — como cuidar de uma semente até virar fruto.
           </div>
-          </div>
         </div>
+      </main>
 
       <!-- coluna lateral -->
       <aside>
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-            <strong>Palavras desta lição</strong>
-            <button id="toggleWords" class="speak" style="background:var(--accent);color:white;border:none;padding:4px 8px;border-radius:6px;font-size:0.8rem;cursor:pointer;">
-              👁️ Ocultar
-            </button>
-          </div>
-          <div id="wordsContent" style="margin-top:8px;color:var(--muted)">Toque na palavra para ouvir e ver exemplos.</div>
-          <div id="sideList" style="margin-top:10px"></div>
-        </div>
-
         <div class="card" style="margin-top:12px">
           <strong>Ajuda para o professor / família</strong>
           <ul style="margin:8px 0 0 18px;color:var(--muted)">
@@ -180,13 +189,13 @@
 
     <footer>
       Project created for a child learner — designed to be playful, simple and safe.
-          </footer>
+    </footer>
   </div>
 
 <script>
-/* -----------------------
-   Dados, utilitários e render
-   ----------------------- */
+  // -----------------------
+  // Dados, utilitários e render
+  // -----------------------
 
   const WORDS = [
     {key:'book',eng:'book',pt:'livro',emoji:'📖'},
@@ -199,31 +208,31 @@
     {key:'ruler',eng:'ruler',pt:'régua',emoji:'📏'},
   ];
 
-const SENTENCES = [
-  { pt: "O livro está no quarto", en: ["The","book","is","in","the","room"], words:["The","book","is","in","the","room"] },
-  { pt: "O lápis está na na mochila", en: ["The","pencil","is","in","the","backpack"], words:["The","pencil","is","in","the","backpack"] },
-  { pt: "A caneta está encima do livro", en: ["The","pen","is","on","the","book"], words:["The","pen","is","on","the","book"] },
-  { pt: "A borracha está na mochila", en: ["The","eraser","is","in","the","backpack"], words:["The","eraser","is","in","the","backpack"] },
-  { pt: "O professor está na sala de aula", en: ["The","teacher","is","in","the","classroom"], words:["The","teacher","is","in","the","classroom"] },
-  { pt: "O calendário está na sala de aula", en: ["The","calendar","is","in","the","classroom"], words:["The","calendar","is","in","the","classroom"] },
-  { pt: "As notas estão na sala de aula", en: ["The","notes","are","in","the","classroom"], words:["The","notes","are","in","the","classroom"] },
-  { pt: "A régua está na sala de aula", en: ["The","ruler","is","in","the","classroom"], words:["The","ruler","is","in","the","classroom"] }
-];
+  const SENTENCES = [
+    { pt: "O livro está no quarto", en: ["The","book","is","in","the","room"], words:["The","book","is","in","the","room"] },
+    { pt: "O lápis está na na mochila", en: ["The","pencil","is","in","the","backpack"], words:["The","pencil","is","in","the","backpack"] },
+    { pt: "A caneta está encima do livro", en: ["The","pen","is","on","the","book"], words:["The","pen","is","on","the","book"] },
+    { pt: "A borracha está na mochila", en: ["The","eraser","is","in","the","backpack"], words:["The","eraser","is","in","the","backpack"] },
+    { pt: "O professor está na sala de aula", en: ["The","teacher","is","in","the","classroom"], words:["The","teacher","is","in","the","classroom"] },
+    { pt: "O calendário está na sala de aula", en: ["The","calendar","is","in","the","classroom"], words:["The","calendar","is","in","the","classroom"] },
+    { pt: "As notas estão na sala de aula", en: ["The","notes","are","in","the","classroom"], words:["The","notes","are","in","the","classroom"] },
+    { pt: "A régua está na sala de aula", en: ["The","ruler","is","in","the","classroom"], words:["The","ruler","is","in","the","classroom"] }
+  ];
 
-let progress = 0;
-let currentSentenceIndex = 0;
-let currentSentence = null;
+  let progress = 0;
+  let currentSentenceIndex = 0;
+  let currentSentence = null;
 
-const bar = () => document.getElementById('bar');
+  const bar = () => document.getElementById('bar');
 
   function updateProgress(){
     const pct = Math.round((progress / WORDS.length) * 100);
-  const b = bar();
-  if(b) b.style.width = pct + '%';
+    const b = bar();
+    if(b) b.style.width = pct + '%';
   }
 
   function speak(text){
-  if(!('speechSynthesis' in window)) return;
+    if(!('speechSynthesis' in window)) return;
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'en-US';
     u.rate = 0.9;
@@ -231,15 +240,11 @@ const bar = () => document.getElementById('bar');
     window.speechSynthesis.speak(u);
   }
 
-/* -----------------------
-   RENDERIZAÇÂO PALAVRAS LATERAL E LISTA
-   ----------------------- */
+  // Renderização das palavras (com emojis)
   function renderWords(list){
-  const wordsDiv = document.getElementById('words');
-  const sideList = document.getElementById('sideList');
-  if(!wordsDiv || !sideList) return;
-  wordsDiv.innerHTML = '';
-  sideList.innerHTML = '';
+    const wordsDiv = document.getElementById('words');
+    if(!wordsDiv) return;
+    wordsDiv.innerHTML = '';
     list.forEach(w=>{
       const row = document.createElement('div');
       row.className='word-row';
@@ -254,12 +259,6 @@ const bar = () => document.getElementById('bar');
         </div>
       `;
       wordsDiv.appendChild(row);
-
-      const li = document.createElement('div');
-      li.style.padding='8px';
-      li.style.borderBottom='1px solid #f1f5f9';
-      li.innerHTML = `<strong>${w.eng}</strong> — <small style='color:var(--muted)'>${w.pt}</small> <button class='speak' data-word='${w.eng}' style='margin-left:8px'>🔊</button>`;
-      sideList.appendChild(li);
     });
 
     document.querySelectorAll('.speak[data-word]').forEach(b=>b.addEventListener('click',e=>{
@@ -269,205 +268,172 @@ const bar = () => document.getElementById('bar');
     }));
   }
 
-/* -----------------------
-   ADD TOKEN AO BANCO (frases) 
-   ----------------------- */
-function addTokenToBank(word){
-  const wordsContainer = document.getElementById('wordsBank');
-  if(!wordsContainer) return;
-  const wordDiv = document.createElement('div');
-  wordDiv.className = 'token draggable';
-  wordDiv.draggable = true;
-  wordDiv.textContent = word;
-  wordDiv.setAttribute('role','button');
-  wordDiv.setAttribute('title','Arraste para a frase');
-  wordDiv.addEventListener('dragstart', e => {
-    e.dataTransfer.setData('text/plain', word);
-    e.dataTransfer.setData('source', 'bank');
-  });
-  wordDiv.addEventListener('click', ()=>speak(word));
-  wordsContainer.appendChild(wordDiv);
-
-}
-
-/* -----------------------
-   RENDERIZA SENTENÇA (Atividade 3)
-   ----------------------- */
-function renderSentence() {
-  const area = document.getElementById('sentenceArea');
-  if (!area) return;
-  area.innerHTML = '';
-  currentSentence = SENTENCES[currentSentenceIndex];
-
-  const ptDiv = document.createElement('div');
-  ptDiv.style.cssText = 'background:#f0f9ff;padding:12px;border-radius:8px;margin-bottom:16px;border-left:4px solid var(--accent);';
-  ptDiv.innerHTML = `<strong style="color:var(--accent)">Frase em Português:</strong><br>${currentSentence.pt}`;
-  area.appendChild(ptDiv);
-
-  // Zona de montagem da frase
-  const dropZone = document.createElement('div');
-  dropZone.id = 'sentenceDropZone';
-  dropZone.style.cssText = 'min-height:60px;border:2px dashed var(--accent);border-radius:10px;padding:12px;background:#f8fafc;margin-bottom:12px;';
-  dropZone.innerHTML = '<div class="hint">Arraste as palavras para aqui na ordem correta</div>';
-  dropZone.addEventListener('dragover', e => e.preventDefault());
-  dropZone.addEventListener('drop', handleSentenceDrop);
-  area.appendChild(dropZone);
-
-  // Banco de palavras
-  const wordsContainer = document.createElement('div');
-  wordsContainer.id = 'wordsBank';
-  wordsContainer.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;min-height:44px;border:1px dashed #e5e7eb;border-radius:8px;padding:8px;background:#fff;';
-  wordsContainer.addEventListener('dragover', e => e.preventDefault());
-  wordsContainer.addEventListener('drop', handleReturnToBank);
-
-  // Adiciona o container primeiro
-  area.appendChild(wordsContainer);
-  
-  // popula o banco com tokens (embaralhado)
-  const shuffledWords = [...currentSentence.words].sort(() => Math.random() - 0.5);
-  
-  // Depois popula com os tokens
-  shuffledWords.forEach(word => addTokenToBank(word));
-
-  const sentenceResult = document.getElementById('sentenceResult');
-  if (sentenceResult) sentenceResult.textContent = '';
-}
-
-/* -----------------------
-   HANDLERS: dropar na frase / devolver ao banco
-   ----------------------- */
-function handleSentenceDrop(e) {
-  e.preventDefault();
-  const word = e.dataTransfer.getData('text/plain');
-  const source = e.dataTransfer.getData('source');
-  const dropZone = document.getElementById('sentenceDropZone');
-  if (!dropZone || !word) return;
-
-  // remove a dica apenas se existir
-  const hint = dropZone.querySelector('.hint');
-  if (hint) hint.remove();
-
-  // cria token na frase
-  const wordSpan = document.createElement('span');
-  wordSpan.className = 'token placed-word';
-  wordSpan.textContent = word;
-  wordSpan.draggable = true;
-  wordSpan.setAttribute('title','Arraste de volta para o banco ou clique para remover');
-  wordSpan.addEventListener('dragstart', ev => {
-    ev.dataTransfer.setData('text/plain', word);
-    ev.dataTransfer.setData('source', 'placed');
-  });
-  // Clique remove e devolve ao banco
-  wordSpan.addEventListener('click', () => {
-    wordSpan.remove();
-    addTokenToBank(word);
-    ensureHintIfEmpty();
-  });
-
-  dropZone.appendChild(wordSpan);
-
-  // Remove a instância do banco (se veio do banco)
-  if (source === 'bank') {
-    const bank = document.getElementById('wordsBank');
-    if (bank) {
-      const el = [...bank.querySelectorAll('.token')].find(t => t.textContent === word);
-      if (el) el.remove();
-    }
-  } else if (source === 'placed') {
-    // veio de outra posição na sentença - permite reorder sem duplicar
+  // Atividade 3 — frases
+  function addTokenToBank(word){
+    const wordsContainer = document.getElementById('wordsBank');
+    if(!wordsContainer) return;
+    const wordDiv = document.createElement('div');
+    wordDiv.className = 'token draggable';
+    wordDiv.draggable = true;
+    wordDiv.textContent = word;
+    wordDiv.setAttribute('role','button');
+    wordDiv.setAttribute('title','Arraste para a frase');
+    wordDiv.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', word);
+      e.dataTransfer.setData('source', 'bank');
+    });
+    wordDiv.addEventListener('click', ()=>speak(word));
+    wordsContainer.appendChild(wordDiv);
   }
-}
 
-function handleReturnToBank(e){
-  e.preventDefault();
-  const word = e.dataTransfer.getData('text/plain');
-  const source = e.dataTransfer.getData('source');
-  if (source === 'placed') {
+  function renderSentence() {
+    const area = document.getElementById('sentenceArea');
+    if (!area) return;
+    area.innerHTML = '';
+    currentSentence = SENTENCES[currentSentenceIndex];
+
+    const ptDiv = document.createElement('div');
+    ptDiv.style.cssText = 'background:#f0f9ff;padding:12px;border-radius:8px;margin-bottom:16px;border-left:4px solid var(--accent);';
+    ptDiv.innerHTML = `<strong style="color:var(--accent)">Frase em Português:</strong><br>${currentSentence.pt}`;
+    area.appendChild(ptDiv);
+
+    const dropZone = document.createElement('div');
+    dropZone.id = 'sentenceDropZone';
+    dropZone.style.cssText = 'min-height:60px;border:2px dashed var(--accent);border-radius:10px;padding:12px;background:#f8fafc;margin-bottom:12px;';
+    dropZone.innerHTML = '<div class="hint">Arraste as palavras para aqui na ordem correta</div>';
+    dropZone.addEventListener('dragover', e => e.preventDefault());
+    dropZone.addEventListener('drop', handleSentenceDrop);
+    area.appendChild(dropZone);
+
+    const wordsContainer = document.createElement('div');
+    wordsContainer.id = 'wordsBank';
+    wordsContainer.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;min-height:44px;border:1px dashed #e5e7eb;border-radius:8px;padding:8px;background:#fff;';
+    wordsContainer.addEventListener('dragover', e => e.preventDefault());
+    wordsContainer.addEventListener('drop', handleReturnToBank);
+    area.appendChild(wordsContainer);
+
+    const shuffledWords = [...currentSentence.words].sort(() => Math.random() - 0.5);
+    shuffledWords.forEach(word => addTokenToBank(word));
+
+    const sentenceResult = document.getElementById('sentenceResult');
+    if (sentenceResult) sentenceResult.textContent = '';
+  }
+
+  function handleSentenceDrop(e) {
+    e.preventDefault();
+    const word = e.dataTransfer.getData('text/plain');
+    const source = e.dataTransfer.getData('source');
     const dropZone = document.getElementById('sentenceDropZone');
-    const el = dropZone && [...dropZone.querySelectorAll('.placed-word, .token')].find(t => t.textContent === word);
-    if (el) el.remove();
-    addTokenToBank(word);
-    ensureHintIfEmpty();
-  }
-}
+    if (!dropZone || !word) return;
 
-/* -----------------------
-   util: se lacuna vazia, mostra dica
-   ----------------------- */
-function ensureHintIfEmpty(){
-  const dropZone = document.getElementById('sentenceDropZone');
-  if (!dropZone) return;
-  const hasWords = dropZone.querySelector('.placed-word, .token');
-  if (!hasWords) {
-    const hintDiv = document.createElement('div');
-    hintDiv.className = 'hint';
-    hintDiv.textContent = 'Arraste as palavras para aqui na ordem correta';
-    dropZone.appendChild(hintDiv);
-  }
-}
+    const hint = dropZone.querySelector('.hint');
+    if (hint) hint.remove();
 
-/* -----------------------
-   Verificar / Limpar / Próxima frase
-   ----------------------- */
-function checkSentence(){
-  const dropZone = document.getElementById('sentenceDropZone');
-  if (!dropZone) return;
-  const placedWords = Array.from(dropZone.querySelectorAll('.placed-word, .token')).map(el => el.textContent);
-  const isCorrect = JSON.stringify(placedWords) === JSON.stringify(currentSentence.en);
-  const sentenceResult = document.getElementById('sentenceResult');
-  if (sentenceResult) {
-    if (isCorrect) {
-      sentenceResult.textContent = '✅ Correto! Frase bem formada!';
-      sentenceResult.style.color = '#059669';
-      progress = Math.min(WORDS.length, progress + 1);
-      updateProgress();
-    } else {
-      sentenceResult.textContent = '❌ Tente novamente. Verifique a ordem das palavras.';
-      sentenceResult.style.color = '#dc2626';
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'token placed-word';
+    wordSpan.textContent = word;
+    wordSpan.draggable = true;
+    wordSpan.setAttribute('title','Arraste de volta para o banco ou clique para remover');
+    wordSpan.addEventListener('dragstart', ev => {
+      ev.dataTransfer.setData('text/plain', word);
+      ev.dataTransfer.setData('source', 'placed');
+    });
+    wordSpan.addEventListener('click', () => {
+      wordSpan.remove();
+      addTokenToBank(word);
+      ensureHintIfEmpty();
+    });
+
+    dropZone.appendChild(wordSpan);
+
+    if (source === 'bank') {
+      const bank = document.getElementById('wordsBank');
+      if (bank) {
+        const el = [...bank.querySelectorAll('.token')].find(t => t.textContent === word);
+        if (el) el.remove();
+      }
     }
   }
-}
 
-function clearSentence(){
-  const dropZone = document.getElementById('sentenceDropZone');
-  if (!dropZone) return;
-  const words = Array.from(dropZone.querySelectorAll('.placed-word, .token')).map(el => el.textContent);
-  words.forEach(w => addTokenToBank(w));
-  dropZone.innerHTML = '';
-  ensureHintIfEmpty();
-  const sentenceResult = document.getElementById('sentenceResult');
-  if (sentenceResult) sentenceResult.textContent = '';
-}
+  function handleReturnToBank(e){
+    e.preventDefault();
+    const word = e.dataTransfer.getData('text/plain');
+    const source = e.dataTransfer.getData('source');
+    if (source === 'placed') {
+      const dropZone = document.getElementById('sentenceDropZone');
+      const el = dropZone && [...dropZone.querySelectorAll('.placed-word, .token')].find(t => t.textContent === word);
+      if (el) el.remove();
+      addTokenToBank(word);
+      ensureHintIfEmpty();
+    }
+  }
 
-function nextSentence(){
-  currentSentenceIndex++;
-  if (currentSentenceIndex >= SENTENCES.length) currentSentenceIndex = 0;
-  renderSentence();
-}
+  function ensureHintIfEmpty(){
+    const dropZone = document.getElementById('sentenceDropZone');
+    if (!dropZone) return;
+    const hasWords = dropZone.querySelector('.placed-word, .token');
+    if (!hasWords) {
+      const hintDiv = document.createElement('div');
+      hintDiv.className = 'hint';
+      hintDiv.textContent = 'Arraste as palavras para aqui na ordem correta';
+      dropZone.appendChild(hintDiv);
+    }
+  }
 
-/* -----------------------
-   Atividade 1: matching (mantive implementação anterior)
-   ----------------------- */
+  function checkSentence(){
+    const dropZone = document.getElementById('sentenceDropZone');
+    if (!dropZone) return;
+    const placedWords = Array.from(dropZone.querySelectorAll('.placed-word, .token')).map(el => el.textContent);
+    const isCorrect = JSON.stringify(placedWords) === JSON.stringify(currentSentence.en);
+    const sentenceResult = document.getElementById('sentenceResult');
+    if (sentenceResult) {
+      if (isCorrect) {
+        sentenceResult.textContent = '✅ Correto! Frase bem formada!';
+        sentenceResult.style.color = '#059669';
+        progress = Math.min(WORDS.length, progress + 1);
+        updateProgress();
+      } else {
+        sentenceResult.textContent = '❌ Tente novamente. Verifique a ordem das palavras.';
+        sentenceResult.style.color = '#dc2626';
+      }
+    }
+  }
+
+  function clearSentence(){
+    const dropZone = document.getElementById('sentenceDropZone');
+    if (!dropZone) return;
+    const words = Array.from(dropZone.querySelectorAll('.placed-word, .token')).map(el => el.textContent);
+    words.forEach(w => addTokenToBank(w));
+    dropZone.innerHTML = '';
+    ensureHintIfEmpty();
+    const sentenceResult = document.getElementById('sentenceResult');
+    if (sentenceResult) sentenceResult.textContent = '';
+  }
+
+  function nextSentence(){
+    currentSentenceIndex++;
+    if (currentSentenceIndex >= SENTENCES.length) currentSentenceIndex = 0;
+    renderSentence();
+  }
+
+  // Atividade 1 — matching
   function populateDraggables(){
     const draggables = document.getElementById('draggables');
-  if (!draggables) return;
     draggables.innerHTML = '';
-    const items = [...WORDS].map(w=>({key:w.key, label:w.eng})).sort(()=>Math.random()-0.5);
+    const items = [...WORDS].sort(()=>Math.random()-0.5);
     items.forEach(it=>{
       const d = document.createElement('div');
       d.className='draggable';
       d.draggable = true;
       d.dataset.key = it.key;
-      d.textContent = it.label;
-    d.addEventListener('dragstart', e=> {
-      e.dataTransfer.setData('text/plain', it.key);
-      e.dataTransfer.setData('source', 'match-bank');
-    });
+      d.textContent = it.eng;
+      d.addEventListener('dragstart', e=>{
+        e.dataTransfer.setData('text/plain', it.key);
+      });
       draggables.appendChild(d);
     });
 
     document.querySelectorAll('.dropzone').forEach(z=>{
-      z.innerHTML = z.getAttribute('data-accept') ? z.textContent : '';
       z.addEventListener('dragover', e=> e.preventDefault());
       z.addEventListener('drop', e=>{
         e.preventDefault();
@@ -476,36 +442,88 @@ function nextSentence(){
         if(existing) existing.remove();
         const span = document.createElement('div');
         span.className='placed';
-      span.style.cssText='margin-top:6px;padding:6px;background:#fff;border:1px solid #e6eef8;border-radius:6px;';
-        span.textContent = WORDS.find(w=>w.key===key).eng;
+        span.style.cssText='margin-top:6px;padding:6px;background:#fff;border:1px solid #e6eef8;border-radius:6px;';
+        const w = WORDS.find(w=>w.key===key);
+        if(w) span.textContent = w.eng;
         z.appendChild(span);
+
+        // Mostra o botão apenas após o primeiro drop
+        const checkMatchWrapper = document.getElementById('checkMatchWrapper');
+        if (checkMatchWrapper) checkMatchWrapper.style.display = 'block';
       });
     });
   }
 
-/* -----------------------
-   Multiple choice (Atividade 2)
-   ----------------------- */
+  // Feedback visual por dropzone + contagem
+  function checkMatch(){
+    const zones = document.querySelectorAll('.dropzone');
+    let correct = 0;
+    const total = zones.length;
+
+    zones.forEach(z=>{
+      const expected = z.dataset.accept;
+      const placed = z.querySelector('.placed');
+      if(placed && placed.textContent === expected){
+        correct++;
+        z.style.border = '2px solid #16a34a'; // verde
+        z.style.backgroundColor = '#ecfdf5';
+      } else {
+        z.style.border = '2px solid #dc2626'; // vermelho
+        z.style.backgroundColor = '#fef2f2';
+      }
+    });
+
+    const resultSpan = document.getElementById('matchResult');
+    if(resultSpan){
+      if(correct === total){
+        resultSpan.textContent = '🎉 Tudo certo! Você acertou todas!';
+        resultSpan.style.color = '#059669';
+        progress = Math.min(WORDS.length, progress + 1);
+        updateProgress();
+      } else {
+        resultSpan.textContent = `✅ ${correct} corretos de ${total}. Continue tentando!`;
+        resultSpan.style.color = '#dc2626';
+      }
+    }
+  }
+
+  // Utilitário para limpar feedback e respostas da Fase 1
+  function resetMatchActivity(){
+    const zones = document.querySelectorAll('.dropzone');
+    zones.forEach(z=>{
+      const placed = z.querySelector('.placed');
+      if(placed) placed.remove();
+      z.style.border = '2px dashed #e6eef8';
+      z.style.backgroundColor = '#fbfdff';
+    });
+    const resultSpan = document.getElementById('matchResult');
+    if(resultSpan){ resultSpan.textContent = ''; resultSpan.style.color = 'var(--muted)'; }
+    populateDraggables();
+    const checkMatchWrapper = document.getElementById('checkMatchWrapper');
+    if (checkMatchWrapper) checkMatchWrapper.style.display = 'none';
+  }
+
+  // Multiple choice
   let mcqIndex = 0;
   function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
   function setupMcq(){
     mcqIndex = 0;
-  const area = document.getElementById('mcqArea'); if (!area) return;
-  area.innerHTML = '';
+    const area = document.getElementById('mcqArea'); if (!area) return;
+    area.innerHTML = '';
     const order = shuffle([...WORDS]);
-  window._mcqOrder = order;
+    window._mcqOrder = order;
     renderMcq(order[mcqIndex], order);
   }
   function renderMcq(word, pool){
     const area = document.getElementById('mcqArea');
-  if (!area) return;
+    if (!area) return;
     area.innerHTML = '';
     document.getElementById('mcqResult').textContent = '';
     const q = document.createElement('div');
     q.innerHTML = `
       <div style='display:flex;align-items:center;gap:12px;margin-bottom:8px;'>
         <div style='font-weight:700;font-size:1.2rem'>${word.eng}</div>
-      <button class='speak' data-word='${word.eng}' style='background:var(--accent);color:white;border:none;padding:8px;border-radius:50%;cursor:pointer;font-size:1.2rem;width:40px;height:40px;display:flex;align-items:center;justify-content:center;'>🔊</button>
+        <button class='speak' data-word='${word.eng}' style='background:var(--accent);color:white;border:none;padding:8px;border-radius:50%;cursor:pointer;font-size:1.2rem;width:40px;height:40px;display:flex;align-items:center;justify-content:center;'>🔊</button>
       </div>
       <div style='color:var(--muted);margin-bottom:8px'>Qual é a tradução?</div>
     `;
@@ -522,197 +540,164 @@ function nextSentence(){
       q.appendChild(b);
     });
     area.appendChild(q);
-  const audioBtn = q.querySelector('.speak[data-word]');
-  if (audioBtn) audioBtn.addEventListener('click', function(){ speak(this.dataset.word); });
-}
+    const audioBtn = q.querySelector('.speak[data-word]');
+    if (audioBtn) audioBtn.addEventListener('click', function(){ speak(this.dataset.word); });
+  }
 
-/* -----------------------
-   EVENTOS / Inicialização (após DOM pronto)
-   ----------------------- */
-document.addEventListener('DOMContentLoaded', () => {
-  renderWords(WORDS);
-  populateDraggables();
-  setupMcq();
-  renderSentence();
-  updateProgress();
+  // Avançar questão (Atividade 2)
+  function nextMcq(){
+    mcqIndex++;
+    if(mcqIndex >= window._mcqOrder.length) mcqIndex = 0;
+    renderMcq(window._mcqOrder[mcqIndex], window._mcqOrder);
+  }
 
-  // controles principais
-  document.getElementById('speakAll').addEventListener('click',()=>{
-    WORDS.forEach((w,i)=>setTimeout(()=>speak(w.eng), i*700));
-  });
-  document.getElementById('shuffle').addEventListener('click',()=>{
-    const s = [...WORDS].sort(()=>Math.random()-0.5);
-    renderWords(s);
-  });
-  document.getElementById('reset').addEventListener('click',()=>{
-    progress = 0; updateProgress(); renderWords(WORDS);
-    populateDraggables(); setupMcq(); currentSentenceIndex = 0; renderSentence();
-    // reexibir áreas
-    const activityArea = document.getElementById('activityArea');
-    if(activityArea) activityArea.style.display = 'none';
-    document.getElementById('showActivity1').style.display = 'inline-block';
-  });
-
-  // Atividade 1: check match
-  document.getElementById('checkMatch').addEventListener('click', ()=>{
-    const zones = [...document.querySelectorAll('.dropzone')];
-    let correct = 0; let total=0;
-    zones.forEach(z=>{
-      const placed = z.querySelector('.placed');
-      const accept = z.dataset.accept;
-      if(accept){ total++; if(placed && placed.textContent.toLowerCase() === WORDS.find(w=>w.key===accept).eng) correct++; }
-    });
-    document.getElementById('matchResult').textContent = `Acertos: ${correct} de ${total}`;
-    progress = Math.min(WORDS.length, progress + correct);
+  // Eventos / Inicialização
+  document.addEventListener('DOMContentLoaded', () => {
+    renderWords(WORDS);
+    populateDraggables();
+    setupMcq();
+    renderSentence();
     updateProgress();
-  });
 
-  // Atividade 2: next
-  document.getElementById('nextMcq').addEventListener('click', ()=>{
-    mcqIndex++; const order = window._mcqOrder || shuffle([...WORDS]); window._mcqOrder = order;
-    if(mcqIndex >= order.length) { document.getElementById('mcqResult').textContent='Fim das perguntas.'; return; }
-    renderMcq(order[mcqIndex], order);
-  });
-
-  // Atividade 3: verificar/limpar/próxima
-  document.getElementById('checkSentence').addEventListener('click', checkSentence);
-  document.getElementById('clearSentence').addEventListener('click', clearSentence);
-  document.getElementById('nextSentence').addEventListener('click', nextSentence);
-
-  // toggle palavras laterais
-  let wordsVisible = true;
-  document.getElementById('toggleWords').addEventListener('click', function() {
-    const wordsContent = document.getElementById('wordsContent');
-    const sideList = document.getElementById('sideList');
-    if (wordsVisible) {
-      wordsContent.style.display = 'none';
-      sideList.style.display = 'none';
-      this.innerHTML = '👁️ Mostrar';
-      this.style.background = 'var(--muted)';
-    } else {
-      wordsContent.style.display = 'block';
-      sideList.style.display = 'block';
-      this.innerHTML = '👁️ Ocultar';
-      this.style.background = 'var(--accent)';
-    }
-    wordsVisible = !wordsVisible;
-  });
-  
-  // fluxo mostrar fases (manter funcionamento anterior)
-  document.getElementById('showActivity1').addEventListener('click', function() {
-    const words = document.getElementById('words');
-    const controls = document.getElementById('controls');
-    const activity2 = document.getElementById('activity2');
-    const activity3 = document.getElementById('activity3');
-    const conclusion = document.querySelector('.conclusion')?.parentNode;
-    
-    if (words) words.style.display = 'none';
-    if (controls) controls.style.display = 'none';
-    if (activity2) activity2.style.display = 'none';
-    if (activity3) activity3.style.display = 'none';
-    if (conclusion) conclusion.style.display = 'none';
-    
-    const activityArea = document.getElementById('activityArea');
-    if (activityArea) activityArea.style.display = 'block';
-    this.style.display = 'none';
-    
-    // Botão Voltar ao início
-    const backToMainBtn = document.createElement('button');
-    backToMainBtn.id = 'backToMain';
-    backToMainBtn.className = 'speak';
-    backToMainBtn.style.cssText = 'background:var(--muted);color:white;border:none;padding:8px 16px;border-radius:8px;font-size:0.9rem;margin-bottom:18px;cursor:pointer;';
-    backToMainBtn.innerHTML = '⬅️ Voltar ao Início';
-    backToMainBtn.addEventListener('click', function() {
-      if (words) words.style.display = 'block';
-      if (controls) controls.style.display = 'flex';
-      if (conclusion) conclusion.style.display = 'block';
-      if (activityArea) activityArea.style.display = 'none';
+    // Controles principais
+    const speakAll = document.getElementById('speakAll');
+    const shuffleBtn = document.getElementById('shuffle');
+    const resetBtn = document.getElementById('reset');
+    if (speakAll) speakAll.addEventListener('click',()=>{ WORDS.forEach((w,i)=>setTimeout(()=>speak(w.eng), i*700)); });
+    if (shuffleBtn) shuffleBtn.addEventListener('click',()=>{ renderWords([...WORDS].sort(()=>Math.random()-0.5)); });
+    if (resetBtn) resetBtn.addEventListener('click',()=>{
+      progress = 0; updateProgress(); renderWords(WORDS);
+      resetMatchActivity(); setupMcq(); currentSentenceIndex = 0; renderSentence();
+      const activityArea = document.getElementById('activityArea');
       const showActivity1Btn = document.getElementById('showActivity1');
+      const conclusion = document.getElementById('conclusionCard');
+      if(activityArea) activityArea.style.display = 'none';
+      if (conclusion) conclusion.style.display = 'block';
       if (showActivity1Btn) showActivity1Btn.style.display = 'inline-block';
-      this.remove();
-      const showActivity2Btn = document.getElementById('showActivity2');
-      if (showActivity2Btn && showActivity2Btn.parentNode) showActivity2Btn.parentNode.remove();
+      const a2 = document.getElementById('activity2'); if (a2) a2.style.display = 'none';
+      const a3 = document.getElementById('activity3'); if (a3) a3.style.display = 'none';
     });
-    if (activityArea) activityArea.insertBefore(backToMainBtn, activityArea.firstChild);
 
-    // Botão Mostrar Fase 2
-    const showActivity2Btn = document.createElement('button');
-    showActivity2Btn.id = 'showActivity2';
-    showActivity2Btn.className = 'speak';
-    showActivity2Btn.style.cssText = 'background:var(--accent);color:white;border:none;padding:12px 24px;font-size:1.1rem;margin-top:18px;';
-    showActivity2Btn.innerHTML = '🧩 Mostrar Fase 2';
-    showActivity2Btn.addEventListener('click', function() {
-      if (activityArea) activityArea.style.display = 'none';
+    // Atividade 1 — checar
+    const checkMatchBtn = document.getElementById('checkMatch');
+    if(checkMatchBtn) checkMatchBtn.addEventListener('click', checkMatch);
+
+    // Atividade 3 — botões
+    const checkSentenceBtn = document.getElementById('checkSentence');
+    const clearSentenceBtn = document.getElementById('clearSentence');
+    const nextSentenceBtn = document.getElementById('nextSentence');
+    if (checkSentenceBtn) checkSentenceBtn.addEventListener('click', checkSentence);
+    if (clearSentenceBtn) clearSentenceBtn.addEventListener('click', clearSentence);
+    if (nextSentenceBtn) nextSentenceBtn.addEventListener('click', nextSentence);
+
+    // (Bug fix) Guardiã: só registra se existir
+    const toggleWordsBtn = document.getElementById('toggleWords');
+    if (toggleWordsBtn) {
+      toggleWordsBtn.addEventListener('click', function() {
+        const wordsContent = document.getElementById('wordsContent');
+        const sideList = document.getElementById('sideList');
+        const visible = wordsContent && wordsContent.style.display !== 'none';
+        if (wordsContent) wordsContent.style.display = visible ? 'none' : 'block';
+        if (sideList) sideList.style.display = visible ? 'none' : 'block';
+        this.innerHTML = visible ? '👁️ Mostrar' : '👁️ Ocultar';
+        this.style.background = visible ? 'var(--muted)' : 'var(--accent)';
+      });
+    }
+
+    // Fluxo de fases
+    const showActivity1 = document.getElementById('showActivity1');
+    if (showActivity1) showActivity1.addEventListener('click', function() {
+      const words = document.getElementById('words');
+      const controls = document.getElementById('controls');
+      const activityArea = document.getElementById('activityArea');
+      const activity2 = document.getElementById('activity2');
+      const activity3 = document.getElementById('activity3');
+      const conclusion = document.getElementById('conclusionCard');
+
+      if (words) words.style.display = 'none';
+      if (controls) controls.style.display = 'none';
+      if (activity2) activity2.style.display = 'none';
+      if (activity3) activity3.style.display = 'none';
+      if (conclusion) conclusion.style.display = 'none';
+      if (activityArea) activityArea.style.display = 'block';
       this.style.display = 'none';
-      if (activity2) activity2.style.display = 'block';
-      
-      // Voltar para Fase 1
-      const backToActivity1Btn = document.createElement('button');
-      backToActivity1Btn.id = 'backToActivity1';
-      backToActivity1Btn.className = 'speak';
-      backToActivity1Btn.style.cssText = 'background:var(--muted);color:white;border:none;padding:8px 16px;border-radius:8px;font-size:0.9rem;margin-bottom:18px;cursor:pointer;';
-      backToActivity1Btn.innerHTML = '⬅️ Voltar à Fase 1';
-      backToActivity1Btn.addEventListener('click', function() {
-        if (activity2) activity2.style.display = 'none';
-        if (activityArea) activityArea.style.display = 'block';
-        this.remove();
-        const showActivity3Btn = document.getElementById('showActivity3');
-        if (showActivity3Btn && showActivity3Btn.parentNode) showActivity3Btn.parentNode.remove();
-      });
-      if (activity2) activity2.insertBefore(backToActivity1Btn, activity2.firstChild);
 
-      // Botão Mostrar Fase 3
-      const showActivity3Btn = document.createElement('button');
-      showActivity3Btn.id = 'showActivity3';
-      showActivity3Btn.className = 'speak';
-      showActivity3Btn.style.cssText = 'background:var(--accent);color:white;border:none;padding:12px 24px;font-size:1.1rem;margin-top:18px;';
-      showActivity3Btn.innerHTML = '🎨 Mostrar Fase 3';
-      showActivity3Btn.addEventListener('click', function() {
-        if (activity2) activity2.style.display = 'none';
+      // Botão Mostrar Fase 2
+      const showActivity2Btn = document.createElement('button');
+      showActivity2Btn.id = 'showActivity2';
+      showActivity2Btn.className = 'speak';
+      showActivity2Btn.style.cssText = 'background:var(--accent);color:white;border:none;padding:12px 24px;font-size:1.1rem;margin-top:18px;';
+      showActivity2Btn.innerHTML = '🧩 Mostrar Fase 2';
+      showActivity2Btn.addEventListener('click', function() {
+        if (activityArea) activityArea.style.display = 'none';
         this.style.display = 'none';
-        if (activity3) activity3.style.display = 'block';
-        
-        // Renderizar a sentença quando a Fase 3 for exibida
-        setTimeout(() => renderSentence(), 100);
+        if (activity2) activity2.style.display = 'block';
 
-        const backToActivity2Btn = document.createElement('button');
-        backToActivity2Btn.id = 'backToActivity2';
-        backToActivity2Btn.className = 'speak';
-        backToActivity2Btn.style.cssText = 'background:var(--muted);color:white;border:none;padding:8px 16px;border-radius:8px;font-size:0.9rem;margin-bottom:18px;cursor:pointer;';
-        backToActivity2Btn.innerHTML = '⬅️ Voltar à Fase 2';
-        backToActivity2Btn.addEventListener('click', function() {
-          if (activity3) activity3.style.display = 'none';
-          if (activity2) activity2.style.display = 'block';
-          this.remove();
-          const conclusionMsg = document.querySelector('[data-conclusion-msg]');
-          if (conclusionMsg && conclusionMsg.parentNode) conclusionMsg.parentNode.remove();
+        // Botão Mostrar Fase 3
+        const showActivity3Btn = document.createElement('button');
+        showActivity3Btn.id = 'showActivity3';
+        showActivity3Btn.className = 'speak';
+        showActivity3Btn.style.cssText = 'background:var(--accent);color:white;border:none;padding:12px 24px;font-size:1.1rem;margin-top:18px;';
+        showActivity3Btn.innerHTML = '🎨 Mostrar Fase 3';
+        showActivity3Btn.addEventListener('click', function() {
+          if (activity2) activity2.style.display = 'none';
+          this.style.display = 'none';
+          if (activity3) activity3.style.display = 'block';
+          setTimeout(() => renderSentence(), 100);
+
+          const backToActivity2Btn = document.createElement('button');
+          backToActivity2Btn.id = 'backToActivity2';
+          backToActivity2Btn.className = 'speak';
+          backToActivity2Btn.style.cssText = 'background:var(--muted);color:white;border:none;padding:8px 16px;border-radius:8px;font-size:0.9rem;margin-bottom:18px;cursor:pointer;';
+          backToActivity2Btn.innerHTML = '⬅️ Voltar à Fase 2';
+          backToActivity2Btn.addEventListener('click', function() {
+            if (activity3) activity3.style.display = 'none';
+            if (activity2) activity2.style.display = 'block';
+            this.remove();
+            const conclusionMsg = document.querySelector('[data-conclusion-msg]');
+            if (conclusionMsg && conclusionMsg.parentNode) conclusionMsg.parentNode.remove();
+          });
+          if (activity3) activity3.insertBefore(backToActivity2Btn, activity3.firstChild);
+
+          const conclusionMsg = document.createElement('div');
+          conclusionMsg.setAttribute('data-conclusion-msg','');
+          conclusionMsg.style.cssText = 'text-align:center;margin-top:18px;padding:16px;background:var(--accent);color:white;border-radius:10px;font-weight:bold;';
+          conclusionMsg.innerHTML = '🎉 Parabéns! Você completou todas as fases!';
+          this.parentNode.appendChild(conclusionMsg);
         });
-        if (activity3) activity3.insertBefore(backToActivity2Btn, activity3.firstChild);
-
-        // Mensagem de conclusão
-        const conclusionMsg = document.createElement('div');
-        conclusionMsg.setAttribute('data-conclusion-msg','');
-        conclusionMsg.style.cssText = 'text-align:center;margin-top:18px;padding:16px;background:var(--accent);color:white;border-radius:10px;font-weight:bold;';
-        conclusionMsg.innerHTML = '🎉 Parabéns! Você completou todas as fases!';
-        this.parentNode.appendChild(conclusionMsg);
+        this.parentNode.appendChild(showActivity3Btn);
       });
-      this.parentNode.appendChild(showActivity3Btn);
+      this.parentNode.appendChild(showActivity2Btn);
     });
-    this.parentNode.appendChild(showActivity2Btn);
+
+    // salvar progresso simples
+    setInterval(()=> localStorage.setItem('tommy_progress', JSON.stringify({progress})), 2000);
+
+    // Atividade 2 — next
+    const nextBtn = document.getElementById('nextMcq');
+    if(nextBtn) nextBtn.addEventListener('click', nextMcq);
   });
 
-  // salvar progresso simples
-  setInterval(()=> localStorage.setItem('tommy_progress', JSON.stringify({progress})), 2000);
+  // Acessibilidade: falar token no espaço
+  document.addEventListener('keydown', e=>{
+    if(e.key === ' '){ const el = document.activeElement; if(el && (el.classList.contains('token') || el.classList.contains('draggable'))) speak(el.textContent); }
+  });
 
-});
-
-/* -----------------------
-   acessibilidade: falar token no espaço (opcional)
-   ----------------------- */
-document.addEventListener('keydown', e=>{
-  if(e.key === ' '){ const el = document.activeElement; if(el && (el.classList.contains('token') || el.classList.contains('draggable'))) speak(el.textContent); }
-});
+  // Dropdown de fases (retrátil)
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const btn = document.getElementById('toggleMenu');
+    const menu = document.getElementById('menuFases');
+    if(btn && menu){
+      btn.addEventListener('click', ()=>{
+        menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+      });
+      document.addEventListener('click', (e)=>{
+        if(!btn.contains(e.target) && !menu.contains(e.target)){
+          menu.style.display = 'none';
+        }
+      });
+    }
+  });
 </script>
 </body>
 </html>
-
