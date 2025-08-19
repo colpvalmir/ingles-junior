@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Junior — family (Aprenda Inglês)</title>
+  <title>Junior — At Bathroom (Aprenda Inglês)</title>
   <style>
     :root{--bg:#f7f9fc;--card:#fff;--accent:#4f46e5;--accent-2:#06b6d4;--muted:#6b7280}
     *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
@@ -52,7 +52,7 @@
             📚 Selecionar Fase ▼
           </button>
           
-         <div id="menuFases" style="display:none;position:absolute;top:100%;left:0;
+          <div id="menuFases" style="display:none;position:absolute;top:100%;left:0;
                background:white;border:1px solid #ddd;border-radius:8px;
                padding:8px;margin-top:6px;box-shadow:0 4px 10px rgba(0,0,0,0.1);
                z-index:1000;max-height:240px;overflow-y:auto;min-width:220px;">
@@ -112,31 +112,31 @@
 
             <div class="match-grid">
               <div>
-                <div class="dropzone" data-accept="Mother" style="font-size:30px; background-color:#cce7ff">
-                  <img src="mother.png" alt="Mother" style="height:40px;">
+                <div class="dropzone" data-accept="toilet" style="font-size:30px; background-color:#cce7ff">
+                  <img src="toilet.png" alt="toilet" style="height:40px;">
                 </div>
-                <div class="dropzone" data-accept="Father" style="font-size:30px; background-color:#cce7ff">
-                  <img src="father.png" alt="Father" style="height:40px;">
+                <div class="dropzone" data-accept="sink" style="font-size:30px; background-color:#cce7ff">
+                  <img src="sink.png" alt="sink" style="height:40px;">
                 </div>
-                <div class="dropzone" data-accept="Parent" style="font-size:30px; background-color:#cce7ff">
-                  <img src="parent.png" alt="Parent" style="height:40px;">
+                <div class="dropzone" data-accept="shower" style="font-size:30px; background-color:#cce7ff">
+                  <img src="shower.png" alt="shower" style="height:40px;">
                 </div>
-                <div class="dropzone" data-accept="Son" style="font-size:30px; background-color:#cce7ff">
-                  <img src="son.png" alt="Son" style="height:40px;">
+                <div class="dropzone" data-accept="towel" style="font-size:30px; background-color:#cce7ff">
+                  <img src="towel.png" alt="towel" style="height:40px;">
                 </div>
               </div>
               <div>
-                <div class="dropzone" data-accept="Daughter" style="font-size:30px; background-color:#cce7ff">
-                  <img src="daughter.png" alt="Daughter" style="height:40px;">
+                <div class="dropzone" data-accept="soap" style="font-size:30px; background-color:#cce7ff">
+                  <img src="soap.png" alt="soap" style="height:40px;">
                 </div>
-                <div class="dropzone" data-accept="Child" style="font-size:30px; background-color:#cce7ff">
-                  <img src="child.png" alt="Child" style="height:40px;">
+                <div class="dropzone" data-accept="toothbrush" style="font-size:30px; background-color:#cce7ff">
+                  <img src="toothbrush.png" alt="toothbrush" style="height:40px;">
                 </div>
-                <div class="dropzone" data-accept="Brother" style="font-size:30px; background-color:#cce7ff">
-                  <img src="brother.png" alt="Brother" style="height:40px;">
+                <div class="dropzone" data-accept="toothpaste" style="font-size:30px; background-color:#cce7ff">
+                  <img src="toothpaste.png" alt="toothpaste" style="height:40px;">
                 </div>
-                <div class="dropzone" data-accept="Sister" style="font-size:30px; background-color:#cce7ff">
-                  <img src="sister.png" alt="Sister" style="height:40px;">
+                <div class="dropzone" data-accept="mirror" style="font-size:30px; background-color:#cce7ff">
+                  <img src="mirror.png" alt="mirror" style="height:40px;">
                 </div>
               </div>
               </div>
@@ -223,29 +223,29 @@
    ----------------------- */
 
   const WORDS = [
-    {key:'mother', eng:'Mother', pt:'Mãe', img:'mother.png'},
-    {key:'father', eng:'Father', pt:'Pai', img:'father.png'},
-    {key:'parent', eng:'Parent', pt:'Responsável', img:'parent.png'},
-    {key:'son', eng:'Son', pt:'Filho', img:'son.png'},
-    {key:'daughter', eng:'Daughter', pt:'Filha', img:'daughter.png'},
-    {key:'child', eng:'Child', pt:'Criança', img:'child.png'},
-    {key:'brother', eng:'Brother', pt:'Irmão', img:'brother.png'},
-    {key:'sister', eng:'Sister', pt:'Irmã', img:'sister.png'},
-    {key:'grandfather', eng:'Grandfather', pt:'Avô', img:'grandfather.png'},
-    {key:'grandmother', eng:'Grandmother', pt:'Avó', img:'grandmother.png'}
-  ];
+  {key:'toilet', eng:'Toilet', pt:'Vaso sanitário', img:'toilet.png'},
+  {key:'sink', eng:'Sink', pt:'Pia', img:'sink.png'},
+  {key:'shower', eng:'Shower', pt:'Chuveiro', img:'shower.png'},
+  {key:'towel', eng:'Towel', pt:'Toalha', img:'towel.png'},
+  {key:'soap', eng:'Soap', pt:'Sabonete', img:'soap.png'},
+  {key:'toothbrush', eng:'Toothbrush', pt:'Escova de dentes', img:'toothbrush.png'},
+  {key:'toothpaste', eng:'Toothpaste', pt:'Pasta de dentes', img:'toothpaste.png'},
+  {key:'mirror', eng:'Mirror', pt:'Espelho', img:'mirror.png'},
+  {key:'shampoo', eng:'Shampoo', pt:'Shampoo', img:'shampoo.png'},
+  {key:'bathtub', eng:'Bathtub', pt:'Banheira', img:'bathtub.png'}
+];
 
 const SENTENCES = [
-  { pt: "Minha mãe está em casa", en: ["My","mother","is","at","home"], words:["My","mother","is","at","home"] },
-  { pt: "Meu pai está trabalhando", en: ["My","father","is","working"], words:["My","father","is","working"] },
-  { pt: "Meu irmão está brincando", en: ["My","brother","is","playing"], words:["My","brother","is","playing"] },
-  { pt: "Minha irmã está estudando", en: ["My","sister","is","studying"], words:["My","sister","is","studying"] },
-  { pt: "Minha avó está na cozinha", en: ["My","grandmother","is","in","the","kitchen"], words:["My","grandmother","is","in","the","kitchen"] },
-  { pt: "Meu avô está no jardim", en: ["My","grandfather","is","in","the","garden"], words:["My","grandfather","is","in","the","garden"] },
-  { pt: "Meu filho está dormindo", en: ["My","son","is","sleeping"], words:["My","son","is","sleeping"] },
-  { pt: "Minha filha está lendo", en: ["My","daughter","is","reading"], words:["My","daughter","is","reading"] },
-  { pt: "A criança está sorrindo", en: ["The","child","is","smiling"], words:["The","child","is","smiling"] },
-  { pt: "Meus pais são legais", en: ["My","parents","are","nice"], words:["My","parents","are","nice"] }
+  { pt: "Eu escovo os dentes na pia", en: ["I","brush","my","teeth","at","the","sink"], words:["I","brush","my","teeth","at","the","sink"] },
+  { pt: "Eu tomo banho no chuveiro", en: ["I","take","a","shower"], words:["I","take","a","shower"] },
+  { pt: "Eu uso sabonete para lavar as mãos", en: ["I","use","soap","to","wash","my","hands"], words:["I","use","soap","to","wash","my","hands"] },
+  { pt: "Eu seco meu rosto com a toalha", en: ["I","dry","my","face","with","the","towel"], words:["I","dry","my","face","with","the","towel"] },
+  { pt: "Eu olho no espelho", en: ["I","look","in","the","mirror"], words:["I","look","in","the","mirror"] },
+  { pt: "Eu coloco pasta de dentes na escova", en: ["I","put","toothpaste","on","the","toothbrush"], words:["I","put","toothpaste","on","the","toothbrush"] },
+  { pt: "Eu lavo o cabelo com shampoo", en: ["I","wash","my","hair","with","shampoo"], words:["I","wash","my","hair","with","shampoo"] },
+  { pt: "Eu tomo banho de banheira", en: ["I","take","a","bath","in","the","bathtub"], words:["I","take","a","bath","in","the","bathtub"] },
+  { pt: "O vaso sanitário fica no banheiro", en: ["The","toilet","is","in","the","bathroom"], words:["The","toilet","is","in","the","bathroom"] },
+  { pt: "Eu limpo minhas mãos no banheiro", en: ["I","clean","my","hands","in","the","bathroom"], words:["I","clean","my","hands","in","the","bathroom"] }
 ];
 
 let progress = 0;
@@ -501,7 +501,8 @@ function checkMatch(){
   zones.forEach(z=>{
     const expected = z.dataset.accept;
     const placed = z.querySelector('.placed');
-    if(placed && placed.textContent === expected){
+    const w = WORDS.find(w=>w.key===expected);
+    if(placed && w && placed.textContent === w.eng){
       correct++;
       z.style.border = '2px solid #16a34a'; // verde
       z.style.backgroundColor = '#ecfdf5';
