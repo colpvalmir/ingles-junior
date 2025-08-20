@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Junior eating fruits (Aprenda Inglês)</title>
+  <style>
+    :root{--bg:#f7f9fc;--card:#fff;--accent:#4f46e5;--accent-2:#06b6d4;--muted:#6b7280}
+    *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#eef2ff);color:#111}
+    .app{max-width:980px;margin:28px auto;padding:20px}
+    header{display:flex;gap:16px;align-items:center}
+    header h1{margin:0;font-size:1.6rem;color:var(--accent)}
+    header p{margin:0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:18px}
+    .card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 6px 20px rgba(15,23,42,0.06)}
+    .lesson-title{display:flex;justify-content:space-between;align-items:center}
+    .word-row{display:flex;gap:12px;align-items:center;padding:10px;border-radius:10px;border:1px dashed #e6eef8;margin-bottom:10px}
+    .word-row .emoji{font-size:32px}
+    .word-row .text{flex:1}
+    .text .eng{font-weight:700;font-size:1.15rem}
+    .text .pt{color:var(--muted);font-size:0.95rem}
+    button.speak{background:transparent;border:1px solid #e5e7eb;padding:6px 10px;border-radius:8px;cursor:pointer}
+    .controls{display:flex;gap:8px;margin-top:12px}
+    .progress{height:10px;background:#eef2ff;border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%}
+    .activity{margin-top:12px}
+    .activity h3{margin:0 0 8px 0}
+    .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .dropzone{min-height:56px;border:2px dashed #e6eef8;border-radius:10px;padding:8px;background:#fbfdff;transition:all 0.25s}
+    .draggable{display:inline-flex;gap:8px;align-items:center;padding:8px 10px;border-radius:8px;background:#fff;border:1px solid #f1f5f9;cursor:grab}
+    .token{display:inline-block;background:white;border:1px solid var(--accent);padding:6px 10px;margin:4px;border-radius:6px;cursor:grab}
+    #wordsBank{min-height:44px;border:1px dashed #e5e7eb;border-radius:8px;padding:8px;background:#fff}
+    .hint{color:var(--muted);text-align:center}
+    footer{margin-top:14px;text-align:center;color:var(--muted);font-size:0.95rem}
+    .conclusion{margin-top:12px;padding:10px;background:#fff7ed;border-radius:10px;color:#92400e}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}} 
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>Junior eating fruits</h1>
+        <p>Mini-curso divertido: aprenda 10 palavras em inglês (nível iniciante)</p>
+
+        <!-- MENU RETRÁTIL DE FASES -->
+        <div style="margin-top:12px;position:relative;">
+          <button id="toggleMenu" class="speak" 
+                  style="background:var(--accent);color:white;border:none;padding:8px 16px;
+                         border-radius:8px;font-size:0.9rem;cursor:pointer;">
+            📚 Selecionar Fase ▼
+          </button>
+          
+          <div id="menuFases" style="display:none;position:absolute;top:100%;left:0;
+               background:white;border:1px solid #ddd;border-radius:8px;
+               padding:8px;margin-top:6px;box-shadow:0 4px 10px rgba(0,0,0,0.1);
+               z-index:1000;max-height:240px;overflow-y:auto;min-width:220px;">
+            <a href="index.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+               📘 Fase 1: At the Park
+            </a>
+            <a href="inglês fase 2.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+               🍴 Fase 2: In the Kitchen
+            </a>
+            <a href="inglês fase 3.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+               🏠 Fase 3: At School
+            </a>
+            <a href="inglês fase 4.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+               🏠 Fase 4: Junior family
+            </a>
+            <a href="inglês fase 5.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+               🏠 Fase 5: Junior At Bathroom
+            </a>
+             <a href="inglês fase 6.html" class="speak" 
+               style="display:block;padding:6px 10px;border-radius:6px;text-decoration:none;color:#111;">
+              🏠 Fase 6: Junior eating fruits
+            </a>
+          </div>
+        </div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-weight:700;color:var(--muted)">Progresso</div>
+        <div class="progress" aria-hidden>
+          <i id="bar" style="width:0%"></i>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- coluna principal -->
+      <main>
+        <div class="card">
+          <!-- lista de palavras -->
+          <div id="words"></div>
+
+          <!-- CONTROLES -->
+          <div id="controls" class="controls">
+            <button id="speakAll" class="speak">🔊 Ouvir todas</button>
+            <button id="shuffle" class="speak">🔁 Embaralhar</button>
+            <button id="reset" class="speak">♻️ Reiniciar</button>
+          </div>
+
+          <!-- Atividade 1 -->
+          <div class="activity" id="activityArea" style="display:none;">
+            <h3>Atividade 1 — Match (arraste até o desenho)</h3>
+            <p style="margin:6px 0;color:var(--muted)">Arraste as palavras para a imagem correspondente.</p>
+
+            <div class="match-grid">
+              <div>
+                <div class="dropzone" data-accept="apple" style="font-size:40px; background-color:#cce7ff;display:flex;justify-content:center;align-items:center;">
+                  🍎
+                </div>
+                <div class="dropzone" data-accept="banana" style="font-size:40px; background-color:#cce7ff;display:flex;justify-content:center;align-items:center;">
+                  🍌
+                </div>
+                <div class="dropzone" data-accept="orange" style="font-size:40px; background-color:#cce7ff;display:flex;justify-content:center;align-items:center;">
+                  🍊
+                </div>
+                <div class="dropzone" data-accept="grape" style="font-size:40px; background-color:#cce7ff;display:flex;justify-content:center;align-items:center;">
+                  🍇
+                </div>
+              </div>
+              <div>
+                <div class="dropzone" data-accept="pear" style="font-size:40px; background-color:#cce7ff;display:flex;justify-content:center;align-items:center;">
+                  🍐
+                </div>
+                <div class="dropzone" data-accept="pineapple" style="font-size:40px; background-color:#cce7ff;display:flex;justify-content:center;align-items:center;">
+                  🍍
+                </div>
+                <div class="dropzone" data-accept="watermelon" style="font-size:40px; background-color:#cce7ff;display:flex;justify-content:center;align-items:center;">
+                  🍉
+                </div>
+                <div class="dropzone" data-accept="strawberry" style="font-size:40px; background-color:#cce7ff;display:flex;justify-content:center;align-items:center;">
+                  🍓
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap" id="draggables"></div>
+
+            <!-- dentro do #activityArea -->
+<div id="checkMatchWrapper" style="margin-top:12px;display:none;">
+  <button id="checkMatch" class="speak">✅ Checar respostas</button>
+  <span id="matchResult" style="margin-left:10px;color:var(--muted)"></span>
+</div>
+
+          </div>
+
+          <!-- Atividade 2 -->
+          <div class="activity" id="activity2" style="display:none;">
+            <h3>Atividade 2 — Multiple Choice</h3>
+            <p style="margin:6px 0;color:var(--muted)">Escolha a tradução correta (português) para a palavra em inglês.</p>
+            <div id="mcqArea"></div>
+            <div style="margin-top:8px">
+              <button id="nextMcq" class="speak" style="background:var(--accent);color:white;border:none;padding:14px 32px;font-size:1.15rem;border-radius:10px;box-shadow:0 2px 8px #4f46e540;cursor:pointer;">
+  Próxima
+</button>
+              <span id="mcqResult" style="margin-left:10px;color:var(--muted)"></span>
+            </div>
+          </div>
+
+          <!-- Atividade 3 -->
+          <div class="activity" id="activity3" style="display:none;">
+            <h3>Atividade 3 — Forme as Frases</h3>
+            <p style="margin:6px 0;color:var(--muted)">Organize as palavras em inglês na ordem correta para formar a frase em português.</p>
+
+            <div id="sentenceArea"></div>
+
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <button id="checkSentence" class="speak">✅ Verificar Frase</button>
+              <button id="clearSentence" class="speak">🔄 Limpar frase</button>
+              <span id="sentenceResult" style="margin-left:10px;color:var(--muted)"></span>
+            </div>
+
+            <div style="margin-top:12px">
+              <button id="nextSentence" class="speak">🔄 Próxima Frase</button>
+            </div>
+          </div>
+
+          <!-- Botão Fase 1 -->
+          <div style="margin-top:18px;text-align:center;">
+            <button id="showActivity1" class="speak" style="background:var(--accent);color:white;border:none;padding:12px 24px;font-size:1.1rem;">
+              🎯 Mostrar Fase 1
+            </button>
+          </div>
+        </div>
+
+        <div id="conclusionCard" class="card" style="margin-top:12px">
+          <h3 style="margin:0 0 8px 0">Conclusão</h3>
+          <div class="conclusion">
+            Aprender com calma, repetir e praticar diariamente ajuda a formar hábitos positivos. Pequenos passos constantes levam a grandes resultados — como cuidar de uma semente até virar fruto.
+          </div>
+        </div>
+      </main>
+
+      <!-- coluna lateral -->
+      <aside>
+        <div class="card" style="margin-top:12px">
+          <strong>Ajuda para o professor / família</strong>
+          <ul style="margin:8px 0 0 18px;color:var(--muted)">
+            <li>Repita as palavras 2–3 vezes por dia.</li>
+            <li>Faça mímica e desenhos — crianças lembram melhor assim.</li>
+            <li>Use reforço positivo: elogios e pequenos prêmios funcionam bem.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Project created for a child learner — designed to be playful, simple and safe.
+    </footer>
+  </div>
+
+<script>
+/* -----------------------
+   Dados, utilitários e render
+   ----------------------- */
+
+  const WORDS = [
+  {key:'apple', eng:'Apple', pt:'Maçã', img:'apple.png'},
+  {key:'banana', eng:'Banana', pt:'Banana', img:'banana.png'},
+  {key:'orange', eng:'Orange', pt:'Laranja', img:'orange.png'},
+  {key:'grape', eng:'Grape', pt:'Uva', img:'grape.png'},
+  {key:'pear', eng:'Pear', pt:'Pêra', img:'pear.png'},
+  {key:'pineapple', eng:'Pineapple', pt:'Abacaxi', img:'pineapple.png'},
+  {key:'watermelon', eng:'Watermelon', pt:'Melancia', img:'watermelon.png'},
+  {key:'strawberry', eng:'Strawberry', pt:'Morango', img:'strawberry.png'},
+  {key:'lemon', eng:'Lemon', pt:'Limão', img:'lemon.png'},
+  {key:'peach', eng:'Peach', pt:'Pêssego', img:'peach.png'}
+];
+
+const SENTENCES = [
+  { pt: "Eu gosto de maçã", en: ["I","like","apple"], words:["I","like","apple"] },
+  { pt: "Eu como banana no café da manhã", en: ["I","eat","banana","for","breakfast"], words:["I","eat","banana","for","breakfast"] },
+  { pt: "A laranja é doce", en: ["The","orange","is","sweet"], words:["The","orange","is","sweet"] },
+  { pt: "Eu tenho uma uva", en: ["I","have","a","grape"], words:["I","have","a","grape"] },
+  { pt: "A pêra é verde", en: ["The","pear","is","green"], words:["The","pear","is","green"] },
+  { pt: "Eu gosto de abacaxi", en: ["I","like","pineapple"], words:["I","like","pineapple"] },
+  { pt: "A melancia é grande", en: ["The","watermelon","is","big"], words:["The","watermelon","is","big"] },
+  { pt: "O morango é vermelho", en: ["The","strawberry","is","red"], words:["The","strawberry","is","red"] },
+  { pt: "O limão é azedo", en: ["The","lemon","is","sour"], words:["The","lemon","is","sour"] },
+  { pt: "O pêssego é macio", en: ["The","peach","is","soft"], words:["The","peach","is","soft"] }
+];
+
+let progress = 0;
+let currentSentenceIndex = 0;
+let currentSentence = null;
+
+const bar = () => document.getElementById('bar');
+
+function updateProgress(){
+  const pct = Math.round((progress / WORDS.length) * 100);
+  const b = bar();
+  if(b) b.style.width = pct + '%';
+}
+
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+/* -----------------------
+   Renderização das palavras (com imagens)
+   ----------------------- */
+function renderWords(list){
+  const wordsDiv = document.getElementById('words');
+  if(!wordsDiv) return;
+  wordsDiv.innerHTML = '';
+  list.forEach(w=>{
+    const row = document.createElement('div');
+    row.className='word-row';
+    row.innerHTML = `
+      <div class='emoji'>
+        ${w.key === 'apple' ? '🍎' :
+          w.key === 'banana' ? '🍌' :
+          w.key === 'orange' ? '🍊' :
+          w.key === 'grape' ? '🍇' :
+          w.key === 'pear' ? '🍐' :
+          w.key === 'pineapple' ? '🍍' :
+          w.key === 'watermelon' ? '🍉' :
+          w.key === 'strawberry' ? '🍓' :
+          w.key === 'lemon' ? '🍋' :
+          w.key === 'peach' ? '🍑' : ''}
+      </div>
+      <div class='text'>
+        <div class='eng'>${w.eng}</div>
+        <div class='pt'>${w.pt}</div>
+      </div>
+      <div>
+        <button class='speak' data-word='${w.eng}'>🔊</button>
+      </div>
+    `;
+    wordsDiv.appendChild(row);
+  });
+
+  document.querySelectorAll('.speak[data-word]').forEach(b=>b.addEventListener('click',e=>{
+    const wd = e.currentTarget.dataset.word; speak(wd);
+    progress = Math.min(WORDS.length, progress + 0.05);
+    updateProgress();
+  }));
+}
+
+/* -----------------------
+   Atividade 3 — frases
+   ----------------------- */
+function addTokenToBank(word){
+  const wordsContainer = document.getElementById('wordsBank');
+  if(!wordsContainer) return;
+  const wordDiv = document.createElement('div');
+  wordDiv.className = 'token draggable';
+  wordDiv.draggable = true;
+  wordDiv.textContent = word;
+  wordDiv.setAttribute('role','button');
+  wordDiv.setAttribute('title','Arraste para a frase');
+  wordDiv.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('text/plain', word);
+    e.dataTransfer.setData('source', 'bank');
+  });
+  wordDiv.addEventListener('click', ()=>speak(word));
+  wordsContainer.appendChild(wordDiv);
+}
+
+function renderSentence() {
+  const area = document.getElementById('sentenceArea');
+  if (!area) return;
+  area.innerHTML = '';
+  currentSentence = SENTENCES[currentSentenceIndex];
+
+  const ptDiv = document.createElement('div');
+  ptDiv.style.cssText = 'background:#f0f9ff;padding:12px;border-radius:8px;margin-bottom:16px;border-left:4px solid var(--accent);';
+  ptDiv.innerHTML = `<strong style="color:var(--accent)">Frase em Português:</strong><br>${currentSentence.pt}`;
+  area.appendChild(ptDiv);
+
+  const dropZone = document.createElement('div');
+  dropZone.id = 'sentenceDropZone';
+  dropZone.style.cssText = 'min-height:60px;border:2px dashed var(--accent);border-radius:10px;padding:12px;background:#f8fafc;margin-bottom:12px;';
+  dropZone.innerHTML = '<div class="hint">Arraste as palavras para aqui na ordem correta</div>';
+  dropZone.addEventListener('dragover', e => e.preventDefault());
+  dropZone.addEventListener('drop', handleSentenceDrop);
+  area.appendChild(dropZone);
+
+  const wordsContainer = document.createElement('div');
+  wordsContainer.id = 'wordsBank';
+  wordsContainer.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;min-height:44px;border:1px dashed #e5e7eb;border-radius:8px;padding:8px;background:#fff;';
+  wordsContainer.addEventListener('dragover', e => e.preventDefault());
+  wordsContainer.addEventListener('drop', handleReturnToBank);
+  area.appendChild(wordsContainer);
+
+  const shuffledWords = [...currentSentence.words].sort(() => Math.random() - 0.5);
+  shuffledWords.forEach(word => addTokenToBank(word));
+
+  const sentenceResult = document.getElementById('sentenceResult');
+  if (sentenceResult) sentenceResult.textContent = '';
+}
+
+function handleSentenceDrop(e) {
+  e.preventDefault();
+  const word = e.dataTransfer.getData('text/plain');
+  const source = e.dataTransfer.getData('source');
+  const dropZone = document.getElementById('sentenceDropZone');
+  if (!dropZone || !word) return;
+
+  const hint = dropZone.querySelector('.hint');
+  if (hint) hint.remove();
+
+  const wordSpan = document.createElement('span');
+  wordSpan.className = 'token placed-word';
+  wordSpan.textContent = word;
+  wordSpan.draggable = true;
+  wordSpan.setAttribute('title','Arraste de volta para o banco ou clique para remover');
+  wordSpan.addEventListener('dragstart', ev => {
+    ev.dataTransfer.setData('text/plain', word);
+    ev.dataTransfer.setData('source', 'placed');
+  });
+  wordSpan.addEventListener('click', () => {
+    wordSpan.remove();
+    addTokenToBank(word);
+    ensureHintIfEmpty();
+  });
+
+  dropZone.appendChild(wordSpan);
+
+  if (source === 'bank') {
+    const bank = document.getElementById('wordsBank');
+    if (bank) {
+      const el = [...bank.querySelectorAll('.token')].find(t => t.textContent === word);
+      if (el) el.remove();
+    }
+  }
+}
+
+function handleReturnToBank(e){
+  e.preventDefault();
+  const word = e.dataTransfer.getData('text/plain');
+  const source = e.dataTransfer.getData('source');
+  if (source === 'placed') {
+    const dropZone = document.getElementById('sentenceDropZone');
+    const el = dropZone && [...dropZone.querySelectorAll('.placed-word, .token')].find(t => t.textContent === word);
+    if (el) el.remove();
+    addTokenToBank(word);
+    ensureHintIfEmpty();
+  }
+}
+
+function ensureHintIfEmpty(){
+  const dropZone = document.getElementById('sentenceDropZone');
+  if (!dropZone) return;
+  const hasWords = dropZone.querySelector('.placed-word, .token');
+  if (!hasWords) {
+    const hintDiv = document.createElement('div');
+    hintDiv.className = 'hint';
+    hintDiv.textContent = 'Arraste as palavras para aqui na ordem correta';
+    dropZone.appendChild(hintDiv);
+  }
+}
+
+function checkSentence(){
+  const dropZone = document.getElementById('sentenceDropZone');
+  if (!dropZone) return;
+  const placedWords = Array.from(dropZone.querySelectorAll('.placed-word, .token')).map(el => el.textContent);
+  const isCorrect = JSON.stringify(placedWords) === JSON.stringify(currentSentence.en);
+  const sentenceResult = document.getElementById('sentenceResult');
+  if (sentenceResult) {
+    if (isCorrect) {
+      sentenceResult.textContent = '✅ Correto! Frase bem formada!';
+      sentenceResult.style.color = '#059669';
+      progress = Math.min(WORDS.length, progress + 1);
+      updateProgress();
+    } else {
+      sentenceResult.textContent = '❌ Tente novamente. Verifique a ordem das palavras.';
+      sentenceResult.style.color = '#dc2626';
+    }
+  }
+}
+
+function clearSentence(){
+  const dropZone = document.getElementById('sentenceDropZone');
+  if (!dropZone) return;
+  const words = Array.from(dropZone.querySelectorAll('.placed-word, .token')).map(el => el.textContent);
+  words.forEach(w => addTokenToBank(w));
+  dropZone.innerHTML = '';
+  ensureHintIfEmpty();
+  const sentenceResult = document.getElementById('sentenceResult');
+  if (sentenceResult) sentenceResult.textContent = '';
+}
+
+function nextSentence(){
+  currentSentenceIndex++;
+  if (currentSentenceIndex >= SENTENCES.length) currentSentenceIndex = 0;
+  renderSentence();
+}
+
+/* -----------------------
+   Atividade 1 — matching
+   ----------------------- */
+function populateDraggables(){
+  const draggables = document.getElementById('draggables');
+  draggables.innerHTML = '';
+  const items = [...WORDS].sort(()=>Math.random()-0.5);
+  items.forEach(it=>{
+    const d = document.createElement('div');
+    d.className='draggable';
+    d.draggable = true;
+    d.dataset.key = it.key;
+    d.textContent = it.eng;
+    d.addEventListener('dragstart', e=>{
+      e.dataTransfer.setData('text/plain', it.key);
+    });
+    draggables.appendChild(d);
+  });
+
+  document.querySelectorAll('.dropzone').forEach(z=>{
+    z.addEventListener('dragover', e=> e.preventDefault());
+    z.addEventListener('drop', e=>{
+      e.preventDefault();
+      const key = e.dataTransfer.getData('text/plain');
+      const existing = z.querySelector('.placed');
+      if(existing) existing.remove();
+      const span = document.createElement('div');
+      span.className='placed';
+      span.style.cssText='margin-top:6px;padding:6px;background:#fff;border:1px solid #e6eef8;border-radius:6px;';
+      const w = WORDS.find(w=>w.key===key);
+      if(w) span.textContent = w.eng;
+      z.appendChild(span);
+
+      // 👇 CÓDIGO NOVO: mostra o botão apenas após o primeiro drop
+      const checkMatchWrapper = document.getElementById('checkMatchWrapper');
+      if (checkMatchWrapper) checkMatchWrapper.style.display = 'block';
+    });
+  });
+}
+
+
+// Feedback visual por dropzone + contagem
+function checkMatch(){
+  const zones = document.querySelectorAll('.dropzone');
+  let correct = 0;
+  const total = zones.length;
+
+  zones.forEach(z=>{
+    const expected = z.dataset.accept;
+    const placed = z.querySelector('.placed');
+    const w = WORDS.find(w=>w.key===expected);
+    if(placed && w && placed.textContent === w.eng){
+      correct++;
+      z.style.border = '2px solid #16a34a'; // verde
+      z.style.backgroundColor = '#ecfdf5';
+    } else {
+      z.style.border = '2px solid #dc2626'; // vermelho
+      z.style.backgroundColor = '#fef2f2';
+    }
+  });
+
+  const resultSpan = document.getElementById('matchResult');
+  if(resultSpan){
+    if(correct === total){
+      resultSpan.textContent = '🎉 Tudo certo! Você acertou todas!';
+      resultSpan.style.color = '#059669';
+      progress = Math.min(WORDS.length, progress + 1);
+      updateProgress();
+    } else {
+      resultSpan.textContent = `✅ ${correct} corretos de ${total}. Continue tentando!`;
+      resultSpan.style.color = '#dc2626';
+    }
+  }
+}
+
+// Utilitário para limpar feedback e respostas da Fase 1
+function resetMatchActivity(){
+  const zones = document.querySelectorAll('.dropzone');
+  zones.forEach(z=>{
+    const placed = z.querySelector('.placed');
+    if(placed) placed.remove();
+    z.style.border = '2px dashed #e6eef8';
+    z.style.backgroundColor = '#fbfdff';
+  });
+  const resultSpan = document.getElementById('matchResult');
+  if(resultSpan){ resultSpan.textContent = ''; resultSpan.style.color = 'var(--muted)'; }
+  populateDraggables();
+}
+
+/* -----------------------
+   Multiple choice
+   ----------------------- */
+let mcqIndex = 0;
+function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
+function setupMcq(){
+  mcqIndex = 0;
+  const area = document.getElementById('mcqArea'); if (!area) return;
+  area.innerHTML = '';
+  const order = shuffle([...WORDS]);
+  window._mcqOrder = order;
+  renderMcq(order[mcqIndex], order);
+}
+function renderMcq(word, pool){
+  const area = document.getElementById('mcqArea');
+  if (!area) return;
+  area.innerHTML = '';
+  document.getElementById('mcqResult').textContent = '';
+  const q = document.createElement('div');
+  q.innerHTML = `
+    <div style='display:flex;align-items:center;gap:12px;margin-bottom:8px;'>
+      <div style='font-weight:700;font-size:1.2rem'>${word.eng}</div>
+      <button class='speak' data-word='${word.eng}' style='background:var(--accent);color:white;border:none;padding:8px;border-radius:50%;cursor:pointer;font-size:1.2rem;width:40px;height:40px;display:flex;align-items:center;justify-content:center;'>🔊</button>
+    </div>
+    <div style='color:var(--muted);margin-bottom:8px'>Qual é a tradução?</div>
+  `;
+  const choices = shuffle([word.pt, ...shuffle(pool.filter(p=>p.key!==word.key).slice(0,3).map(p=>p.pt))]);
+  choices.forEach(ch=>{
+    const b = document.createElement('button');
+    b.className='speak'; b.style.display='block'; b.style.width='100%'; b.style.marginTop='6px';
+    b.textContent = ch;
+    b.addEventListener('click',()=>{
+      const ok = ch === word.pt;
+      document.getElementById('mcqResult').textContent = ok ? '✅ Correto!' : '❌ Tente novamente';
+      if(ok){ progress = Math.min(WORDS.length, progress + 1); updateProgress(); }
+    });
+    q.appendChild(b);
+  });
+  area.appendChild(q);
+  const audioBtn = q.querySelector('.speak[data-word]');
+  if (audioBtn) audioBtn.addEventListener('click', function(){ speak(this.dataset.word); });
+}
+
+// Avançar questão (Atividade 2)
+function nextMcq(){
+  mcqIndex++;
+  if(mcqIndex >= window._mcqOrder.length) mcqIndex = 0;
+  renderMcq(window._mcqOrder[mcqIndex], window._mcqOrder);
+}
+
+/* -----------------------
+   Eventos / Inicialização
+   ----------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  renderWords(WORDS);
+  populateDraggables();
+  setupMcq();
+  renderSentence();
+  updateProgress();
+
+  // Controles principais
+  const speakAll = document.getElementById('speakAll');
+  const shuffleBtn = document.getElementById('shuffle');
+  const resetBtn = document.getElementById('reset');
+  if (speakAll) speakAll.addEventListener('click',()=>{ WORDS.forEach((w,i)=>setTimeout(()=>speak(w.eng), i*700)); });
+  if (shuffleBtn) shuffleBtn.addEventListener('click',()=>{ renderWords([...WORDS].sort(()=>Math.random()-0.5)); });
+  if (resetBtn) resetBtn.addEventListener('click',()=>{
+    progress = 0; updateProgress(); renderWords(WORDS);
+    resetMatchActivity(); setupMcq(); currentSentenceIndex = 0; renderSentence();
+    const activityArea = document.getElementById('activityArea');
+    const showActivity1Btn = document.getElementById('showActivity1');
+    const conclusion = document.getElementById('conclusionCard');
+    if(activityArea) activityArea.style.display = 'none';
+    if (conclusion) conclusion.style.display = 'block';
+    if (showActivity1Btn) showActivity1Btn.style.display = 'inline-block';
+    const a2 = document.getElementById('activity2'); if (a2) a2.style.display = 'none';
+    const a3 = document.getElementById('activity3'); if (a3) a3.style.display = 'none';
+  });
+
+  // Atividade 1 — checar
+  const checkMatchBtn = document.getElementById('checkMatch');
+  if(checkMatchBtn) checkMatchBtn.addEventListener('click', checkMatch);
+
+  // Atividade 3 — botões
+  const checkSentenceBtn = document.getElementById('checkSentence');
+  const clearSentenceBtn = document.getElementById('clearSentence');
+  const nextSentenceBtn = document.getElementById('nextSentence');
+  if (checkSentenceBtn) checkSentenceBtn.addEventListener('click', checkSentence);
+  if (clearSentenceBtn) clearSentenceBtn.addEventListener('click', clearSentence);
+  if (nextSentenceBtn) nextSentenceBtn.addEventListener('click', nextSentence);
+
+  // (Bug fix) Guardiã: só registra se existir
+  const toggleWordsBtn = document.getElementById('toggleWords');
+  if (toggleWordsBtn) {
+    toggleWordsBtn.addEventListener('click', function() {
+      const wordsContent = document.getElementById('wordsContent');
+      const sideList = document.getElementById('sideList');
+      const visible = wordsContent && wordsContent.style.display !== 'none';
+      if (wordsContent) wordsContent.style.display = visible ? 'none' : 'block';
+      if (sideList) sideList.style.display = visible ? 'none' : 'block';
+      this.innerHTML = visible ? '👁️ Mostrar' : '👁️ Ocultar';
+      this.style.background = visible ? 'var(--muted)' : 'var(--accent)';
+    });
+  }
+
+  // Fluxo de fases
+  const showActivity1 = document.getElementById('showActivity1');
+  if (showActivity1) showActivity1.addEventListener('click', function() {
+    const words = document.getElementById('words');
+    const controls = document.getElementById('controls');
+    const activityArea = document.getElementById('activityArea');
+    const activity2 = document.getElementById('activity2');
+    const activity3 = document.getElementById('activity3');
+    const conclusion = document.getElementById('conclusionCard');
+
+    if (words) words.style.display = 'none';
+    if (controls) controls.style.display = 'none';
+    if (activity2) activity2.style.display = 'none';
+    if (activity3) activity3.style.display = 'none';
+    if (conclusion) conclusion.style.display = 'none';
+    if (activityArea) activityArea.style.display = 'block';
+    this.style.display = 'none';
+
+      // Botão Mostrar Fase 2
+    const showActivity2Btn = document.createElement('button');
+    showActivity2Btn.id = 'showActivity2';
+    showActivity2Btn.className = 'speak';
+    showActivity2Btn.style.cssText = 'background:var(--accent);color:white;border:none;padding:12px 24px;font-size:1.1rem;margin-top:18px;';
+    showActivity2Btn.innerHTML = '🧩 Mostrar Fase 2';
+    showActivity2Btn.addEventListener('click', function() {
+      if (activityArea) activityArea.style.display = 'none';
+      this.style.display = 'none';
+      if (activity2) activity2.style.display = 'block';
+      
+
+      // Botão Mostrar Fase 3
+      const showActivity3Btn = document.createElement('button');
+      showActivity3Btn.id = 'showActivity3';
+      showActivity3Btn.className = 'speak';
+      showActivity3Btn.style.cssText = 'background:var(--accent);color:white;border:none;padding:12px 24px;font-size:1.1rem;margin-top:18px;';
+      showActivity3Btn.innerHTML = '🎨 Mostrar Fase 3';
+      showActivity3Btn.addEventListener('click', function() {
+        if (activity2) activity2.style.display = 'none';
+        this.style.display = 'none';
+        if (activity3) activity3.style.display = 'block';
+        setTimeout(() => renderSentence(), 100);
+
+              
+       
+        backToActivity2Btn.addEventListener('click', function() {
+          if (activity3) activity3.style.display = 'none';
+          if (activity2) activity2.style.display = 'block';
+          this.remove();
+          const conclusionMsg = document.querySelector('[data-conclusion-msg]');
+          if (conclusionMsg && conclusionMsg.parentNode) conclusionMsg.parentNode.remove();
+        });
+        if (activity3) activity3.insertBefore(backToActivity2Btn, activity3.firstChild);
+
+        const conclusionMsg = document.createElement('div');
+        conclusionMsg.setAttribute('data-conclusion-msg','');
+        conclusionMsg.style.cssText = 'text-align:center;margin-top:18px;padding:16px;background:var(--accent);color:white;border-radius:10px;font-weight:bold;';
+        conclusionMsg.innerHTML = '🎉 Parabéns! Você completou todas as fases!';
+        this.parentNode.appendChild(conclusionMsg);
+      });
+      this.parentNode.appendChild(showActivity3Btn);
+    });
+    this.parentNode.appendChild(showActivity2Btn);
+  });
+
+  // salvar progresso simples
+  setInterval(()=> localStorage.setItem('tommy_progress', JSON.stringify({progress})), 2000);
+
+  // Atividade 2 — next
+  const nextBtn = document.getElementById('nextMcq');
+  if(nextBtn) nextBtn.addEventListener('click', nextMcq);
+});
+
+// Acessibilidade: falar token no espaço
+document.addEventListener('keydown', e=>{
+  if(e.key === ' '){ const el = document.activeElement; if(el && (el.classList.contains('token') || el.classList.contains('draggable'))) speak(el.textContent); }
+});
+
+// Dropdown de fases (retrátil)
+document.addEventListener('DOMContentLoaded', ()=>{
+  const btn = document.getElementById('toggleMenu');
+  const menu = document.getElementById('menuFases');
+  if(btn && menu){
+    btn.addEventListener('click', ()=>{
+      menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+    });
+    document.addEventListener('click', (e)=>{
+      if(!btn.contains(e.target) && !menu.contains(e.target)){
+        menu.style.display = 'none';
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>
